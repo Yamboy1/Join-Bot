@@ -1,0 +1,12 @@
+{
+  "name": "join-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/brockbreacher/join-bot",
+  "author": "Yamboy1 <yamboyd1@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "dotenv": "^8.2.0"
+  }
+}
