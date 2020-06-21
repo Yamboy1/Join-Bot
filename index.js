@@ -1,6 +1,6 @@
 const { readFileSync, writeFileSync } = require("fs");
-require("dotenv").config()
 const { Client, MessageEmbed, GuildMember } = require("discord.js");
+const { token } = require("./config.json");
 const client = new Client();
 
 client.on("message", (message) => {
@@ -62,4 +62,4 @@ function createLeaveEmbed(member) {
     .setThumbnail(member.user.displayAvatarURL());
 }
 
-client.login(process.env.TOKEN);
+client.login(token);
