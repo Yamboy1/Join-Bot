@@ -1,6 +1,6 @@
 const { readFileSync, writeFileSync } = require("fs");
 const { Client, MessageEmbed, GuildMember } = require("discord.js");
-const { token } = require("./config.json");
+const config = require("./config.json");
 const client = new Client();
 
 client.on('ready', () => {
