@@ -4,6 +4,7 @@ const { token } = require("./config.json");
 const client = new Client();
 
 client.on('ready', () => {
+    console.log("change this part") // needed for startup on ptero
     client.user.setActivity(config.activity, { type: config.type });
 });
 
