@@ -3,6 +3,10 @@ const { Client, MessageEmbed, GuildMember } = require("discord.js");
 const { token } = require("./config.json");
 const client = new Client();
 
+client.on('ready', () => {
+    client.user.setActivity(config.activity, { type: config.type });
+});
+
 client.on("message", (message) => {
   const arr = message.content.match(/!join (.+)/);
   if (arr == null) return;
@@ -62,4 +66,4 @@ function createLeaveEmbed(member) {
     .setThumbnail(member.user.displayAvatarURL());
 }
 
-client.login(token);
+client.login(config.token);
