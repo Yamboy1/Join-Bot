@@ -43,8 +43,8 @@ function createJoinEmbed(member) {
     .setTitle(`Welcome ${member.displayName} To ${member.guild.name}`)
     .setColor(0x008000)
     .setDescription(`Welcome To ${member.guild.name}`)
-    .addField("Time Joined:", member.joinedAt.toString())
-    .addField("Account Creation Date", member.user.createdAt.toString())
+    .addField("Time Joined:", member.joinedAt.toUTCString())
+    .addField("Account Creation Date", member.user.createdAt.toUTCString())
     .addField("Total Members", member.guild.members.cache.size)
     .setTimestamp()
     .setThumbnail(member.user.displayAvatarURL());
