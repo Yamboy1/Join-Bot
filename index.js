@@ -1,6 +1,6 @@
 const { readFileSync, writeFileSync } = require("fs");
 require("dotenv").config()
-const { Client } = require("discord.js");
+const { Client, MessageEmbed, GuildMember } = require("discord.js");
 const client = new Client();
 
 client.on("message", (message) => {
@@ -15,13 +15,13 @@ client.on("message", (message) => {
 });
 
 client.on("guildMemberAdd", member => {
-  let channel;
-  (channel = getJoinChannel(member.guild)) && channel.send("Someone joined")
+  const channel = getJoinChannel(member.guild);
+  if (channel) channel.send({ embed: createJoinEmbed(member) })
 })
 
 client.on("guildMemberRemove", member => {
-  let channel;
-  (channel = getJoinChannel(member.guild)) && channel.send("Someone left")
+  const channel = getJoinChannel(member.guild);
+  if (channel) channel.send({ embed: createLeaveEmbed(member) })
 })
 
 function getJoinChannel(guild) {
@@ -34,6 +34,32 @@ function getJoinChannel(guild) {
 
   console.log(channelId);
   return guild.channels.resolve(channelId);
+}
+
+function createJoinEmbed(member) {
+  // vs code typechecking
+  if (!(member instanceof GuildMember)) return;
+  return new MessageEmbed()
+    .setTitle(`Welcome ${member.displayName} To ${member.guild.name}`)
+    .setColor(0x008000)
+    .setDescription(`Welcome To ${member.guild.name}`)
+    .addField("Time Joined:", member.joinedAt.toString())
+    .addField("Account Creation Date", member.user.createdAt.toString())
+    .addField("Total Members", member.guild.members.cache.size)
+    .setTimestamp()
+    .setThumbnail(member.user.displayAvatarURL());
+}
+
+function createLeaveEmbed(member) {
+  // vs code typechecking
+  if (!(member instanceof GuildMember)) return;
+  return new MessageEmbed()
+    .setTitle(`${member.displayName} Left ${member.guild.name}`)
+    .setColor(0xFF0000)
+    .setDescription("Cya")
+    .addField("Total Members", member.guild.members.cache.size)
+    .setTimestamp()
+    .setThumbnail(member.user.displayAvatarURL());
 }
 
 client.login(process.env.TOKEN);
