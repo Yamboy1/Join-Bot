@@ -8,7 +8,8 @@ client.on('ready', () => {
     client.user.setActivity(config.activity, { type: config.type });
 });
 
-client.on("message", (message) => {
+client.on("message", async (message) => {
+  if (!message.member.hasPermission("ADMINISTRATOR")) return
   const arr = message.content.match(/jb!join (.+)/);
   if (arr == null) return;
 
@@ -19,14 +20,14 @@ client.on("message", (message) => {
   message.channel.send("Channel set as join channel")
 });
 
-client.on("guildMemberAdd", member => {
+client.on("guildMemberAdd", async member => {
   const channel = getJoinChannel(member.guild);
-  if (channel) channel.send({ embed: createJoinEmbed(member) })
+  if (channel) channel.send({ embed: await createJoinEmbed(member) })
 })
 
-client.on("guildMemberRemove", member => {
+client.on("guildMemberRemove", async member => {
   const channel = getJoinChannel(member.guild);
-  if (channel) channel.send({ embed: createLeaveEmbed(member) })
+  if (channel) channel.send({ embed: await createLeaveEmbed(member) })
 })
 
 function getJoinChannel(guild) {
@@ -41,7 +42,7 @@ function getJoinChannel(guild) {
   return guild.channels.resolve(channelId);
 }
 
-function createJoinEmbed(member) {
+async function createJoinEmbed(member) {
   // vs code typechecking
   if (!(member instanceof GuildMember)) return;
   return new MessageEmbed()
@@ -50,19 +51,19 @@ function createJoinEmbed(member) {
     .setDescription(`Welcome To ${member.guild.name}`)
     .addField("Time Joined:", member.joinedAt.toUTCString())
     .addField("Account Creation Date", member.user.createdAt.toUTCString())
-    .addField("Total Members", member.guild.members.cache.size)
+    .addField("Total Members", (await member.guild.fetch()).members.cache.size)
     .setTimestamp()
     .setThumbnail(member.user.displayAvatarURL());
 }
 
-function createLeaveEmbed(member) {
+async function createLeaveEmbed(member) {
   // vs code typechecking
   if (!(member instanceof GuildMember)) return;
   return new MessageEmbed()
     .setTitle(`${member.displayName} Left ${member.guild.name}`)
     .setColor(0xFF0000)
     .setDescription("Cya")
-    .addField("Total Members", member.guild.members.cache.size)
+    .addField("Total Members", await (member.guild.fetch()).members.cache.size)
     .setTimestamp()
     .setThumbnail(member.user.displayAvatarURL());
 }
