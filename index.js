@@ -9,7 +9,7 @@ client.on('ready', () => {
 });
 
 client.on("message", (message) => {
-  const arr = message.content.match(/!join (.+)/);
+  const arr = message.content.match(/jb!join (.+)/);
   if (arr == null) return;
 
   const [,capture] = arr;
