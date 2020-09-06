@@ -1,4 +1,4 @@
-const { readFileSync, writeFileSync } = require("fs");
+const { readFileSync, writeFileSync, unlinkSync } = require("fs");
 const { Client, MessageEmbed, GuildMember } = require("discord.js");
 const config = require("./config.json");
 const client = new Client();
@@ -6,6 +6,14 @@ const client = new Client();
 client.on('ready', () => {
     console.log("change this part") // needed for startup on ptero
     client.user.setActivity(config.activity, { type: config.type });
+});
+
+client.on("guildDelete", guild => {
+    try {
+        unlinkSync("./guilds/"+guild.id");
+    } catch (e) {
+        console.log(`An error occurred deleting the file: ${e}`);
+    }
 });
 
 client.on("message", async (message) => {
@@ -51,7 +59,7 @@ async function createJoinEmbed(member) {
     .setDescription(`Welcome To ${member.guild.name}`)
     .addField("Time Joined:", member.joinedAt.toUTCString())
     .addField("Account Creation Date", member.user.createdAt.toUTCString())
-    .addField("Total Members", (await member.guild.fetch()).members.cache.size)
+    .addField("Total Members", member.guild.memberCount)
     .setTimestamp()
     .setThumbnail(member.user.displayAvatarURL());
 }
@@ -63,7 +71,7 @@ async function createLeaveEmbed(member) {
     .setTitle(`${member.displayName} Left ${member.guild.name}`)
     .setColor(0xFF0000)
     .setDescription("Cya")
-    .addField("Total Members", await (member.guild.fetch()).members.cache.size)
+    .addField("Total Members", member.guild.memberCount)
     .setTimestamp()
     .setThumbnail(member.user.displayAvatarURL());
 }
