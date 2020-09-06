@@ -9,7 +9,7 @@ client.on('ready', () => {
 });
 
 client.on("message", async (message) => {
-  if (!message.member.hasPermission("ADMINISTRATOR")) return
+  if (!message.member.hasPermission("MANAGE_SERVER")) return
   const arr = message.content.match(/jb!join (.+)/);
   if (arr == null) return;
 
