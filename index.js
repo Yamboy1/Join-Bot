@@ -1,7 +1,17 @@
-const { readFileSync, writeFileSync, unlinkSync } = require("fs");
+const { mkdirSync, readFileSync, writeFileSync, unlinkSync } = require("fs");
 const { Client, MessageEmbed, GuildMember } = require("discord.js");
 const config = require("./config.json");
 const client = new Client();
+try {
+  mkdirSync("./guilds");
+  console.log("Created the guilds directory")
+} catch (e) {
+  if (e.code !== "EEXIST") {
+    console.log(`An error occured creating the guild directory: ${e}`);
+  }
+  console.log("Guilds directory already exists, ignoring...");
+}
+
 
 client.on('ready', () => {
     console.log("change this part") // needed for startup on ptero
