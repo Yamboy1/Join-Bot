@@ -1,6 +1,6 @@
 # Join-Bot
 
-![Discord Shield](https://discordapp.com/api/guilds/514101346992128012/widget.png?style=shield)
+![Discord Shield](https://discord.com/api/guilds/514101346992128012/widget.png?style=shield)
 
 ## Join and leave messages on discord made simple
 
