@@ -30,13 +30,6 @@ client.on("message", async (message) => {
   message.channel.send("Channel set as join channel")
 });
 
-  const [,capture] = arr;
-  const channel = message.guild.channels.resolve(capture);
-  if (!channel) return message.channel.send("Invalid channel id");
-  writeFileSync("./guilds/"+ message.guild.id, channel.id);
-  message.channel.send("Channel set as join channel")
-});
-
 client.on("guildMemberAdd", async member => {
   const channel = getJoinChannel(member.guild);
   if (channel) channel.send({ embed: await createJoinEmbed(member) })
