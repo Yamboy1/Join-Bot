@@ -1,0 +1,7 @@
+{
+  "name": "Join-Bot",
+  "description": "Discord Join-Logs Made Simple!",
+  "repository": "https://github.com/brockbreacher/Join-Bot",
+  "logo": "https://brbr.xyz/wp-content/uploads/2020/09/joinbot.png",
+  "keywords": ["node", "discord", "bot"]
+}
