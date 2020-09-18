@@ -6,7 +6,7 @@
   "author": "Yamboy1 <yamboyd1@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "discord.js": "^12.2.0",
+    "discord.js": "12.3.1",
     "dotenv": "^8.2.0"
   }
 }
