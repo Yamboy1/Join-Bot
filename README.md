@@ -9,7 +9,7 @@ jb!join <channelid>
 sets the join log channel (user must have Manage Server perms to run the cmd!) 
 
 ### Prefix:
-To change the prefix edit the ```jb!``` part on line 21 of ```index.js```
+To change the prefix edit config.json
 
 ###### Bot planned by brockbreacher, Coded by Yamboy1
 
