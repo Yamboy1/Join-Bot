@@ -20,7 +20,7 @@ client.on("message", async (message) => {
    // Ignore bots
     if (message.author.bot) return;
   if (!message.member.hasPermission("MANAGE_GUILD")) return
-  const arr = message.content.match(/^jb!join (.+)/);
+  const arr = message.content.match(new RegExp(`^${config.prefix}join (.+)`));
   if (arr == null) return;
 
   const [,capture] = arr;
