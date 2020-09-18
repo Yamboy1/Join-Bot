@@ -17,9 +17,18 @@ client.on("guildDelete", guild => {
 });
 
 client.on("message", async (message) => {
+   // Ignore bots
+    if (message.author.bot) return;
   if (!message.member.hasPermission("MANAGE_GUILD")) return
-  const arr = message.content.match(/jb!join (.+)/);
+  const arr = message.content.match(/^jb!join (.+)/);
   if (arr == null) return;
+
+  const [,capture] = arr;
+  const channel = message.guild.channels.resolve(capture);
+  if (!channel) return message.channel.send("Invalid channel id");
+  writeFileSync("./guilds/"+ message.guild.id, channel.id);
+  message.channel.send("Channel set as join channel")
+});
 
   const [,capture] = arr;
   const channel = message.guild.channels.resolve(capture);
