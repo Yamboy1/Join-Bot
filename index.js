@@ -15,6 +15,8 @@ try {
 client.on('ready', () => {
     console.log(`INFO: Connected to Discord as ${client.user.tag} with prefix "${config.prefix}"`);
 
+     console.log('Servers: '+client.guilds.cache.size)
+    
     client.user.setActivity(config.activity, {type: config.type})
         .catch(() => console.log("WARN: Unable to set activity"));
 
