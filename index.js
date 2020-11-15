@@ -3,22 +3,27 @@ const { Client, MessageEmbed } = require("discord.js");
 const config = require("./config.json");
 const client = new Client();
 
+const log = message => {
+    writeFileSync("./log.txt", `[${new Date().toISOString()}] ${message}\n`, { flag: "a"});
+    console.log(message);
+}
+
 try {
     mkdirSync("./guilds");
-    console.log("INFO: Created the guilds directory");
+    log("INFO: Created the guilds directory");
 } catch (e) {
     if (e.code !== "EEXIST") {
-        return console.log(`ERROR: An error occured creating the guild directory: ${e}`);
+        return log(`ERROR: An error occured creating the guild directory: ${e}`);
     }
 }
 
 client.on('ready', () => {
-    console.log(`INFO: Connected to Discord as ${client.user.tag} with prefix "${config.prefix}"`);
+    log(`INFO: Connected to Discord as ${client.user.tag} with prefix "${config.prefix}"`);
 
-     console.log('Servers: '+client.guilds.cache.size)
-    
+     log('Servers: '+client.guilds.cache.size)
+
     client.user.setActivity(config.activity, {type: config.type})
-        .catch(() => console.log("WARN: Unable to set activity"));
+        .catch(() => log("WARN: Unable to set activity"));
 
     // VVV Stuff that needs to happens after the bot starts should be put here VVV
 });
@@ -30,10 +35,10 @@ client.on("guildDelete", guild => {
         // If the entry doesn't exist, then there's nothing to delete
         if (e.code === "ENOENT") return
 
-        return console.log(`ERROR: An error occurred deleting the entry for guild ${guild.id}: ${e}`);
+        return log(`ERROR: An error occurred deleting the entry for guild ${guild.id}: ${e}`);
     }
 
-    console.log(`INFO: Deleted entry for guild ${guild.id}`);
+    log(`INFO: Deleted entry for guild ${guild.id}`);
 });
 
 client.on("message", message => {
@@ -45,12 +50,12 @@ client.on("message", message => {
     const args = message.content.slice(config.prefix.length).trim().split(/ +/);
 
     switch (args.shift()) {
-        case "join": 
+        case "join":
             // TODO: Should I add an error message if not?
             // User needs MANAGE_GUILD perms for this command
             if (!message.member.hasPermission("MANAGE_GUILD")) return
 
-            
+
             const channel = message.guild.channels.resolve(args.shift());
 
             if (!channel) {
@@ -58,7 +63,7 @@ client.on("message", message => {
             }
 
             writeFileSync("./guilds/" + message.guild.id, channel.id);
-            console.log(`INFO: Set ${channel.id} as join channel for guild ${message.guild.id}`)
+            log(`INFO: Set ${channel.id} as join channel for guild ${message.guild.id}`)
 
             return message.channel.send("Channel set as join channel")
     }
@@ -109,7 +114,7 @@ function getJoinChannel(guild) {
             return;
         }
 
-        console.log(`ERROR: An error occurred fetching the entry for guild ${guild.id}`);
+        log(`ERROR: An error occurred fetching the entry for guild ${guild.id}`);
         return;
     }
 
@@ -117,4 +122,4 @@ function getJoinChannel(guild) {
 }
 
 client.login(config.token)
-    .catch(e => console.log(`ERROR: Error connecting to discord: ${e}`));
+    .catch(e => log(`ERROR: Error connecting to discord: ${e}`));
