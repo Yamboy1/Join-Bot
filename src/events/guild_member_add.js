@@ -7,8 +7,7 @@ export const name = "guildMemberAdd";
 export async function handler(member) {
   const joinChannelId = db.getJoinChannel(member.guild.id);
   if (!joinChannelId) return;
-  const channel = await member.guild.channels.fetch(joinChannelId);
-  console.log(channel.id);
+  const channel = await member.guild.channels.fetch(joinChannelId); 
   if (!channel) return;
 
 

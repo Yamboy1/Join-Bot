@@ -4,8 +4,11 @@
   "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "start": "npm run registerCommands && node .",
-    "registerCommands": "node src/register_commands.js"
+    "register-global-commands": "node src/register_global_commands.js",
+    "register-guild-commands": "node src/register_guild_commands.js",
+    "start": "node .",
+    "dev": "npm run register-guild-commands && npm start",
+    "prod": "npm run register-global-commands && npm run dev"
   },
   "repository": "https://github.com/brockbreacher/join-bot",
   "author": "Yamboy1 <yamboyd1@gmail.com>",
