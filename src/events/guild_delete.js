@@ -1,4 +1,4 @@
-import * as db from "../util/database.js";
+import * as db from "../database/index.js";
 
 export const name = "guildDelete";
 

@@ -3,7 +3,7 @@ import { on } from "events";
 import { MessageActionRow, MessageSelectMenu, MessageButton } from "discord.js";
 import { SlashCommandBuilder } from "@discordjs/builders";
 
-import * as db from "../util/database.js";
+import * as db from "../database/index.js";
 
 export const data = 
   new SlashCommandBuilder()

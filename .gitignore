@@ -2,3 +2,4 @@ node_modules/
 guilds/
 config.json
 log.txt
+join-bot.db
