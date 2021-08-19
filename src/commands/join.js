@@ -12,6 +12,16 @@ export const data =
     
 
 export async function run(interaction) {
+  if (interaction.guild === null) {
+    await interaction.reply("This command can only be used in a server.");
+    return;
+  }
+  
+  if (!interaction.member.permissions.has("MANAGE_GUILD")) {
+    await interaction.reply("You need to have the `Manage Server` permission to use this command.");
+    return;
+  }
+    
   const channels =
     [...(await interaction.guild.channels.fetch())
       .filter(c => c.type === "GUILD_TEXT")
